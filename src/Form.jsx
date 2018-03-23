@@ -43,7 +43,7 @@ class ContextWrapper extends React.Component {
   }
 
   checkCondition(args) {
-    return args(this.values);
+    return args(this.props.values);
   }
 
   render() {
@@ -57,7 +57,6 @@ class ContextWrapper extends React.Component {
                 this.props.listen(values);
               }
 
-              this.values = values;
               return (
                 <pre>
                   {JSON.stringify(values, 0, 2)}
@@ -75,7 +74,6 @@ class ContextWrapper extends React.Component {
           if (this.props.listen && _isFunction(this.props.listen)) {
             this.props.listen(props.values);
           }
-          this.values = props.values;
         }}/>
       </React.Fragment>
     );

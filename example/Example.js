@@ -1,15 +1,13 @@
 import React from 'react';
 import {hot} from 'react-hot-loader'
+import Well from 'react-bootstrap/lib/Well';
 import Form from '../src/Form';
 import Input from '../src/Bs/Input'
 import DateTime from '../src/Bs/DateTime'
-import Complex from '../src/Bs/ComplexRow';
 import Message from '../src/Bs/Message';
-import TinyMce from '../src/Bs/TinyMce';
 import Button from '../src/Bs/Button';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-import _get from 'lodash/get';
+import Radio from '../src/Bs/Radio';
+import Show from '../src/Bs/Show';
 
 require('./utils/moment');
 
@@ -41,74 +39,52 @@ class Example extends React.Component {
       window.alert(JSON.stringify(values, 0, 2));
     };
 
+    const size = {
+      labelSize: {xs: 3},
+      fieldSize: {xs: 9}
+    };
+
     return (
       <div className="container">
         <h1>FinalForm Components</h1>
         <div className={'well'}>
           <Form
-            initialValues={this.state}
+            debug
+            className="form-horizontal"
+            subscription={{values: true}}
+            validate={() => {
+            }}
             onSubmit={onSubmit}
-            listen={(values) => (this.values = values)}
           >
-            <Input
-              label='Name'
-              placeholder='Name'
-              type={'text'}
-              name={'name'}/>
-            <Input
-              label='Middlename'
-              placeholder='middlename'
-              type={'text'}
-              name={'middlename'}/>
+            <Well>
+              <Input label="Firstname" name={"firstname"} type={"text"} {...size} />
+              <Input
+                disabled={(data) => (data.firstname !== 'raymond')}
+                label="Sirname"
+                name={"sirname"}
+                type={"text"}
+                {...size} />
+              <Input label="Email" name={"email"} type={"email"} {...size} />
+              <DateTime label="birthday" name={"birthday"} {...size} />
+            </Well>
 
-            <TinyMce name={'tiny'} />
-
-            <h2>Children</h2>
-            <Complex
-              name="complex"
-              label="complex2"
-              left={{xs: 10}}
-              right={{xs: 2, className: 'complex-row'}}
-              render={name => (
-                <Row>
-                  <Col xs={3}>
-                    <Input
-                      type={'text'}
-                      placeholder={'first name'}
-                      disabled={(values) => (values.name === 'raymond')}
-                      name={`${name}.name1`}/>
-                  </Col>
-                  <Col xs={3}>
-                    <Input
-                      type={'text'}
-                      placeholder={'second name'}
-                      disabled={(data) => (_get(data, `${name}.name1`) === "1")}
-                      name={`${name}.name2`}/>
-                  </Col>
-                  <Col xs={3}>
-                    <Input
-                      type={'number'}
-                      placeholder={'age'}
-                      name={`${name}.name3`}/>
-                  </Col>
-                  <Col xs={3}>
-                    <DateTime
-                      type={'text'}
-                      placeholder={'favorite animal'}
-                      name={`${name}.name4`}
-                    />
-                  </Col>
-                </Row>
-              )}/>
-            <Button type={'submit'}>submit</Button>
-            <button type={'button'} onClick={this.loadData}>load data</button>
-
-            <Message type={'success'}>
-              Top Het is helemaal top gegaan.
-            </Message>
-            <Message type={'error'}>
-              je hebt iets te fixen man!
-            </Message>
+            <Well>
+              <Radio label="I have kids" name="has_kids" {...size}>
+                <option value="0">Nope</option>
+                <option value="1">Yep</option>
+              </Radio>
+              <Show
+                show={data => {
+                  console.log(data);
+                  return data.has_kids === "1";
+                }}
+              >
+                <h4>How many kids?</h4>
+              </Show>
+            </Well>
+            <Message type="success">Message after success</Message>
+            <Message type="error">Oopsie!</Message>
+            <Button type="submit">send</Button>
           </Form>
         </div>
       </div>
