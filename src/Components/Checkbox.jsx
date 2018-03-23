@@ -74,7 +74,6 @@ class RadioBinder extends React.Component {
       if (this.props.field && this.props.field.disabled && _isFunction(this.props.field.disabled)) {
         disabled = this.context.checkCondition(this.props.field.disabled(), _get(this.props.field, 'parent'));
       }
-
       return (
         <Checkbox
           key={key}
@@ -83,7 +82,7 @@ class RadioBinder extends React.Component {
           value={option.props.value}
           checked={clone.indexOf(option.props.value) !== -1}
           onChange={(event) => {
-            const newValue = [...this.props.input.value];
+            const newValue = ((this.props.input.value instanceof Array) ? this.props.input.value : [this.props.input.value]).filter(Boolean);
             if (event.target.checked) {
               newValue.push(option.props.value);
             } else {

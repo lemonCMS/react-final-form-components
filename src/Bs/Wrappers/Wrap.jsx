@@ -36,23 +36,25 @@ class Wrap extends React.Component {
 
   dropDown(props) {
     const menuItem = [];
-    let dropDownTitle = null;
+    let dropDownTitle = _get(props.field, 'title', null);
     _map(props.field.children, (item, key) => {
       const select = () => {
         this.input.onBlur();
         this.input.onChange(item.props.value);
       };
-
       if (item.props.selected && !props.input.value) {
         dropDownTitle = item.props.children;
         menuItem.push(<MenuItem key={key} onSelect={select}>{item.props.children}</MenuItem>);
-        menuItem.push(<MenuItem key={key + '_div'} divider />);
       } else {
         if (String(this.input.value) === String(item.props.value)) {
           dropDownTitle = item.props.children;
         }
         menuItem.push(<MenuItem key={key} onSelect={select}>{item.props.children}</MenuItem>);
       }
+      if (item.props.selected) {
+        menuItem.push(<MenuItem key={key + '_div'} divider />);
+      }
+
     });
     return {dropDownTitle, menuItem};
   }

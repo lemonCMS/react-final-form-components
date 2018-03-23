@@ -28,7 +28,8 @@ class Complex extends React.Component {
       if (staticField !== true) {
         if (complexIndex > 0 && count > 1) {
           returnButtons.push(
-            <Button key={2}
+            <Button
+              key={2}
               onClick={() => move(complexIndex, complexIndex - 1)}
               bsStyle={_get(this.props.moveBtn, 'bsStyle', 'default')}
               bsSize={_get(this.props.moveBtn, 'bsSize', undefined)}
@@ -41,7 +42,8 @@ class Complex extends React.Component {
         }
         if (count > 1 && complexIndex < count - 1) {
           returnButtons.push(
-            <Button key={3}
+            <Button
+              key={3}
               onClick={() => move(complexIndex, complexIndex + 1)}
               bsStyle={_get(this.props.moveBtn, 'bsStyle', 'default')}
               bsSize={_get(this.props.moveBtn, 'bsSize', undefined)}
@@ -54,7 +56,8 @@ class Complex extends React.Component {
         }
 
         returnButtons.push(
-          <Button key={1}
+          <Button
+            key={1}
             onClick={() => remove(complexIndex)}
             bsStyle={_get(this.props.removeBtn, 'bsStyle', 'danger')}
             bsSize={_get(this.props.removeBtn, 'bsSize', undefined)}
@@ -146,18 +149,19 @@ class Complex extends React.Component {
         // this.props.formChange('itemsx', state);
       });
     };
-
-    if (this.state.collapsed === true || (this.state.collapsed === null && this.props.collapsed && this.props.collapsed === true)) {
-      return (
-        <Row className="rfg-cmplx rfg-cmplx-collapsed">
-          <Col componentClass={ControlLabel} {...labelSize()}>
-            <Button type="button" onClick={toggle} bsStyle="link" {...thisSize()}>
-              {'+ '}
-              {this.props.label}
-            </Button>
-          </Col>
-        </Row>
-      );
+    if (this.props.label) {
+      if (this.state.collapsed === true || (this.state.collapsed === null && this.props.collapsed && this.props.collapsed === true)) {
+        return (
+          <Row className="rfg-cmplx rfg-cmplx-collapsed">
+            <Col componentClass={ControlLabel} {...labelSize()}>
+              <Button type="button" onClick={toggle} bsStyle="link" {...thisSize()}>
+                {'+ '}
+                {this.props.label}
+              </Button>
+            </Col>
+          </Row>
+        );
+      }
     }
 
     let disabled = false;
@@ -173,7 +177,8 @@ class Complex extends React.Component {
         };
         return (
           <div className="rfg-cmplx-btn-add">
-            {staticField !== true && <Button type="button"
+            {staticField !== true && <Button
+              type="button"
               onClick={() => fields.push({})}
               disabled={disabled}
               {...thisSize()}
@@ -190,12 +195,13 @@ class Complex extends React.Component {
 
     return (
       <Row className="rfg-cmplx rfg-cmplx-collapsed">
+        {this.props.label &&
         <Col componentClass={ControlLabel} {...labelSize()}>
           <Button type="button" onClick={toggle} bsStyle="link" {...thisSize()}>
             {'- '}
             {this.props.label}
           </Button>
-        </Col>
+        </Col>}
         <Col {...fieldSize()}>
           {fields.map((field, key) => {
             return (
