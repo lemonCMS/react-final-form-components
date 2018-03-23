@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import BSButton from 'react-bootstrap/lib/Button';
 import PropTypes from 'prop-types';
-import {hot} from 'react-hot-loader';
 
 class Button extends Component {
   render() {
@@ -24,4 +23,4 @@ Button.defaultProps = {};
 Button.contextTypes = {
   status: PropTypes.object
 };
-export default hot(module)(Button);
+export default Button;
