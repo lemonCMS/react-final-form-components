@@ -118,20 +118,12 @@ class Wrap extends React.Component {
       if (_has(props.field, 'labelSize')) {
         return props.field.labelSize;
       }
-      if (this.props.horizontal) {
-        return {sm: 2};
-      }
     };
 
     const fieldSize = () => {
       if (_has(props.field, 'fieldSize')) {
         return props.field.fieldSize;
       }
-      if (this.props.horizontal) {
-        return {sm: 10};
-      }
-
-      return ({style: {position: 'relative'}});
     };
 
     const add = _pick(custom, ['type', 'placeholder', 'rows', 'cols']);
@@ -316,7 +308,6 @@ Wrap.propTypes = {
   'size': PropTypes.string,
   'addField': PropTypes.func,
   'static': PropTypes.bool,
-  'horizontal': PropTypes.bool,
   'name': PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   component: PropTypes.func,

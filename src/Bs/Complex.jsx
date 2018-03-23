@@ -127,17 +127,11 @@ class Complex extends React.Component {
       if (_has(this.props, 'labelSize')) {
         return this.props.labelSize;
       }
-      if (this.props.horizontal) {
-        return {sm: 2};
-      }
     };
 
     const fieldSize = () => {
       if (_has(this.props, 'fieldSize')) {
         return this.props.fieldSize;
-      }
-      if (this.props.horizontal) {
-        return {sm: 10};
       }
     };
 
