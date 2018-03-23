@@ -6,10 +6,10 @@ import DateTime from '../src/Bs/DateTime'
 import Complex from '../src/Bs/ComplexRow';
 import Message from '../src/Bs/Message';
 import TinyMce from '../src/Bs/TinyMce';
+import Button from '../src/Bs/Button';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import _get from 'lodash/get';
-
 
 require('./utils/moment');
 
@@ -34,20 +34,20 @@ class Example extends React.Component {
   }
 
   render() {
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    const onSubmit = async values => {
+      await sleep(1000);
+      window.alert(JSON.stringify(values, 0, 2));
+    };
+
     return (
       <div className="container">
         <h1>FinalForm Components</h1>
         <div className={'well'}>
           <Form
             initialValues={this.state}
-            validate={() => {
-              const errors = {};
-              errors.name = 'Must contain Raymond';
-              errors.complex = [];
-              errors.complex[0] = {};
-              errors.complex[0].name1 = 'Must contain Raymond';
-              return errors;
-            }}
+            onSubmit={onSubmit}
             listen={(values) => (this.values = values)}
           >
             <Input
@@ -100,7 +100,7 @@ class Example extends React.Component {
                   </Col>
                 </Row>
               )}/>
-            <button type={'submit'}>submit</button>
+            <Button type={'submit'}>submit</Button>
             <button type={'button'} onClick={this.loadData}>load data</button>
 
             <Message type={'success'}>

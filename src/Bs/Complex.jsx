@@ -246,7 +246,7 @@ Complex.propTypes = {
   fieldSize: PropTypes.object,
   label: PropTypes.string,
   name: PropTypes.string,
-  row: PropTypes.string
+  row: PropTypes.bool
 };
 Complex.defaultProps = {
   row: false

@@ -15,7 +15,6 @@ import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import {Field} from 'react-final-form';
-import RenderCount from '../../RenderCount';
 
 class Wrap extends React.Component {
 
@@ -281,7 +280,6 @@ class Wrap extends React.Component {
     if(this.context.debug) {
       return (
         <div style={{position: 'relative'}}>
-          <RenderCount/>
           {rendered}
         </div>
       );

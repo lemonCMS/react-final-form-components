@@ -125,7 +125,7 @@ FormObj.propTypes = {
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onSubmit: PropTypes.func,
   validate: PropTypes.func,
-  className: PropTypes.func,
+  className: PropTypes.string,
   listen: PropTypes.func,
   debug: PropTypes.bool
 };
