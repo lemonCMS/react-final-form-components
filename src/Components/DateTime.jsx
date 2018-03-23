@@ -1,19 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _isFunction from 'lodash/isFunction';
 import ReactDateTime from 'react-datetime';
 
 class ContextBinder extends React.Component {
 
   render() {
-    console.log(this.props);
     if (this.context.isStatic || this.props.field.static) {
       return (
         <div className={'rte-readonly'} dangerouslySetInnerHTML={{__html: this.props.input.value}} />
       );
     }
 
+
+    const inputProps = {
+      disabled: false
+    };
+    if (this.props.field && this.props.field.disabled && _isFunction(this.props.field.disabled)) {
+      inputProps.disabled = this.context.checkCondition(this.props.field.disabled);
+    }
+
     return (
-      <ReactDateTime {...this.props.input} {...this.props.field} />
+      <ReactDateTime {...this.props.input} inputProps={inputProps} />
     );
   }
 }
@@ -24,8 +32,7 @@ ContextBinder.propTypes = {
 };
 
 ContextBinder.contextTypes = {
-  checkHidden: PropTypes.func,
-  checkShow: PropTypes.func,
+  checkCondition: PropTypes.func,
   isStatic: PropTypes.bool
 };
 

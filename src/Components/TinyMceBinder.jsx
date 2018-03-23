@@ -23,8 +23,7 @@ ContextBinder.propTypes = {
 };
 
 ContextBinder.contextTypes = {
-  checkHidden: PropTypes.func,
-  checkShow: PropTypes.func,
+  checkCondition: PropTypes.func,
   isStatic: PropTypes.bool
 };
 

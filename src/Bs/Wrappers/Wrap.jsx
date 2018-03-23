@@ -15,6 +15,7 @@ import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import {Field} from 'react-final-form';
+import RenderCount from '../../RenderCount';
 
 class Wrap extends React.Component {
 
@@ -69,7 +70,7 @@ class Wrap extends React.Component {
 
     let disabled = false;
     if (props.field && props.field.disabled && _isFunction(props.field.disabled)) {
-      disabled = this.context.checkDisabled(props.field.disabled());
+      disabled = this.context.checkCondition(props.field.disabled());
     }
 
     if (isStatic === true || disabled === true) {
@@ -95,15 +96,14 @@ class Wrap extends React.Component {
 
   renderField(props) {
     const {input, help, meta: {touched, error, submitError, submitFailed, valid}, ...custom} = props;
-
     this.input = input;
     const size = _get(props.field, 'bsSize', this.props.size);
     if (props.field && props.field.hidden && _isFunction(props.field.hidden)) {
-      if (this.context.checkHidden(props.field.hidden, _get(props, 'parent')) === true) {
+      if (this.context.checkCondition(props.field.hidden, _get(props, 'parent')) === true) {
         return null;
       }
     } else if (props.field && props.field.show && _isFunction(props.field.show)) {
-      if (this.context.checkShow(props.field.show, _get(props, 'parent')) !== true) {
+      if (this.context.checkCondition(props.field.show, _get(props, 'parent')) !== true) {
         return null;
       }
     }
@@ -138,9 +138,8 @@ class Wrap extends React.Component {
     if (add.type === 'select') {
       add.componentClass = 'select';
     }
-
-    if (custom.disabled && _isFunction(custom.disabled)) {
-      add.disabled = this.context.checkDisabled(custom.disabled(), _get(props, 'parent'));
+    if (custom.field.disabled && _isFunction(custom.field.disabled)) {
+      add.disabled = this.context.checkCondition(custom.field.disabled, _get(props, 'parent'));
     }
 
     if (props.field.placeholder) {
@@ -273,20 +272,30 @@ class Wrap extends React.Component {
       }
     };
 
-    return (
-      <FormGroup
-        {...thisSize()}
-        validationState={validationState()}
-      >
-        {getLabel()}
-        <Col {...fieldSize()}>
-          {getField()}
-          {((touched && error) || (submitFailed && submitError)) && <FormControl.Feedback />}
-          {props.field.help && (!touched || (!submitError && !error)) && <HelpBlock>{props.field.help}</HelpBlock>}
-          {((touched && error) || (submitFailed && submitError)) && <HelpBlock>{(submitError || error)}</HelpBlock>}
-        </Col>
-      </FormGroup>
-    );
+    const rendered = (<FormGroup
+      {...thisSize()}
+      validationState={validationState()}
+    >
+
+      {getLabel()}
+      <Col {...fieldSize()}>
+        {getField()}
+        {((touched && error) || (submitFailed && submitError)) && <FormControl.Feedback />}
+        {props.field.help && (!touched || (!submitError && !error)) && <HelpBlock>{props.field.help}</HelpBlock>}
+        {((touched && error) || (submitFailed && submitError)) && <HelpBlock>{(submitError || error)}</HelpBlock>}
+      </Col>
+    </FormGroup>);
+
+    if(this.context.debug) {
+      return (
+        <div style={{position: 'relative'}}>
+          <RenderCount/>
+          {rendered}
+        </div>
+      );
+    }
+
+    return rendered;
   }
 
   render() {
@@ -314,9 +323,8 @@ Wrap.propTypes = {
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 Wrap.contextTypes = {
-  checkDisabled: PropTypes.func.isRequired,
-  checkHidden: PropTypes.func.isRequired,
-  checkShow: PropTypes.func.isRequired,
+  debug: PropTypes.bool.isRequired,
+  checkCondition: PropTypes.func.isRequired,
   isStatic: PropTypes.bool.isRequired
 };
 Wrap.defaultProps = {};

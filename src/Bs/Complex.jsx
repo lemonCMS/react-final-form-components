@@ -78,7 +78,6 @@ class Complex extends React.Component {
       {header}
     </div>);
 
-
     const component = () => {
       if (this.props.render) {
         return this.props.render(name);
@@ -87,6 +86,19 @@ class Complex extends React.Component {
       return React.Children.map(this.props.children, child =>
         React.cloneElement(child, {name: `${name}.${child.props.name}`, parent: name}));
     };
+
+    if (this.props.row) {
+      return (
+        <Row>
+          <Col {...this.props.left}>
+            {component()}
+          </Col>
+          <Col {...this.props.right}>
+            {headerDiv}
+          </Col>
+        </Row>
+      );
+    }
 
     return (
       <Panel className="rfg-cmplx-btn-flds">
@@ -156,7 +168,7 @@ class Complex extends React.Component {
 
     let disabled = false;
     if (this.props && this.props.disabled && _isFunction(this.props.disabled)) {
-      disabled = this.context.checkDisabled(this.props.disabled());
+      disabled = this.context.checkCondition(this.props.disabled());
     }
     const renderAddButton = () => {
       if (_get(this.props, 'multiple', true) === true || fields.length === 0) {
@@ -168,7 +180,7 @@ class Complex extends React.Component {
         return (
           <div className="rfg-cmplx-btn-add">
             {staticField !== true && <Button type="button"
-              onClick={() => fields.push({name: ''})}
+              onClick={() => fields.push({})}
               disabled={disabled}
               {...thisSize()}
               {...bsStyle()}
@@ -206,11 +218,11 @@ class Complex extends React.Component {
 
   render() {
     if (this.props && this.props.hidden && _isFunction(this.props.hidden)) {
-      if (this.context.checkHidden(this.props.hidden, _get(this.props, 'parent')) === true) {
+      if (this.context.checkCondition(this.props.hidden) === true) {
         return null;
       }
     } else if (this.props && this.props.show && _isFunction(this.props.show)) {
-      if (this.context.checkShow(this.props.show, _get(this.props, 'parent')) !== true) {
+      if (this.context.checkCondition(this.props.show) !== true) {
         return null;
       }
     }
@@ -220,7 +232,7 @@ class Complex extends React.Component {
         component={this.renderComplex}
         name={this.props.name}
         collapsed={this.state.collapsed}
-        rerenderOnEveryChange={_get(this.props, 'rerenderOnEveryChange', false)}
+        subscription={this.props.subscription || {values: true}}
       />
     );
   }
@@ -239,14 +251,15 @@ Complex.propTypes = {
   labelSize: PropTypes.object,
   fieldSize: PropTypes.object,
   label: PropTypes.string,
-  name: PropTypes.string
+  name: PropTypes.string,
+  row: PropTypes.string
 };
-Complex.defaultProps = {};
+Complex.defaultProps = {
+  row: false
+};
 
 Complex.contextTypes = {
-  checkHidden: PropTypes.func,
-  checkShow: PropTypes.func,
-  checkDisabled: PropTypes.func,
+  checkCondition: PropTypes.func,
   isStatic: PropTypes.bool
 };
 

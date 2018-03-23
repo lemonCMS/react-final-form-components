@@ -93,7 +93,7 @@ class Resourcebinder extends React.Component {
   render() {
     let disabled = false;
     if (this.props.field && this.props.field.disabled && _isFunction(this.props.field.disabled)) {
-      disabled = this.context.checkDisabled(this.props.field.disabled());
+      disabled = this.context.checkCondition(this.props.field.disabled());
     }
 
     const button = () => {
@@ -135,8 +135,7 @@ Resourcebinder.propTypes = {
 };
 
 Resourcebinder.contextTypes = {
-  checkHidden: PropTypes.func,
-  checkShow: PropTypes.func,
+  checkCondition: PropTypes.func,
   isStatic: PropTypes.bool
 };
 export default ({input, field}) => (<Resourcebinder

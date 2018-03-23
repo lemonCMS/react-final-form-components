@@ -21,7 +21,8 @@
   ],
   "plugins": [
     "@babel/plugin-proposal-decorators",
-    "@babel/plugin-proposal-object-rest-spread"
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-export-default-from"
   ],
   "env": {
     "development": {

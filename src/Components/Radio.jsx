@@ -66,7 +66,7 @@ class RadioBinder extends React.Component {
 
       let disabled = false;
       if (this.props.field && this.props.field.disabled && _isFunction(this.props.field.disabled)) {
-        disabled = this.context.checkDisabled(this.props.field.disabled(), _get(this.props.field, 'parent'));
+        disabled = this.context.checkCondition(this.props.field.disabled(), _get(this.props.field, 'parent'));
       }
       return (
         <Radio
@@ -119,7 +119,7 @@ class RadioBinder extends React.Component {
   searchBox() {
     let disabled = false;
     if (this.props.field && this.props.field.disabled && _isFunction(this.props.field.disabled)) {
-      disabled = this.context.checkDisabled(this.props.field.disabled());
+      disabled = this.context.checkCondition(this.props.field.disabled());
     }
 
     if ((this.props.field.searchable || this.props.field.filter) && !this.props.field.static && !this.context.isStatic) {
@@ -150,8 +150,7 @@ RadioBinder.propTypes = {
   input: PropTypes.object
 };
 RadioBinder.contextTypes = {
-  checkHidden: PropTypes.func,
-  checkShow: PropTypes.func,
+  checkCondition: PropTypes.func,
   isStatic: PropTypes.bool
 };
 

@@ -7,11 +7,11 @@ class Show extends React.Component {
 
   render() {
     if (this.props.hidden && _isFunction(this.props.hidden)) {
-      if (this.context.checkHidden(this.props.hidden, _get(this.props, 'parent')) === true) {
+      if (this.context.checkCondition(this.props.hidden, _get(this.props, 'parent')) === true) {
         return null;
       }
     } else if (this.props.show && _isFunction(this.props.show)) {
-      if (this.context.checkShow(this.props.show, _get(this.props, 'parent')) !== true) {
+      if (this.context.checkCondition(this.props.show, _get(this.props, 'parent')) !== true) {
         return null;
       }
     }
@@ -26,8 +26,7 @@ Show.propTypes = {
 };
 Show.defaultProps = {};
 Show.contextTypes = {
-  checkHidden: PropTypes.func.isRequired,
-  checkShow: PropTypes.func.isRequired,
+  checkCondition: PropTypes.func.isRequired,
   isStatic: PropTypes.bool.isRequired
 };
 

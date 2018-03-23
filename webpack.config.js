@@ -24,7 +24,6 @@ combinedPlugins = combinedPlugins.concat(babelrcObjectDevelopment.plugins);
 var babelLoaderQuery = Object.assign({}, babelrcObject, babelrcObjectDevelopment, {plugins: combinedPlugins});
 delete babelLoaderQuery.env;
 
-console.log( path.resolve(__dirname, './example'));
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
