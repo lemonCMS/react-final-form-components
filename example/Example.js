@@ -49,6 +49,7 @@ class Example extends React.Component {
       labelSize: {xs: 3},
       fieldSize: {xs: 9}
     };
+
     const sizeComplex = {
       fieldSize: {xs: 12}
     };
