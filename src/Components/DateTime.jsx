@@ -21,7 +21,7 @@ class ContextBinder extends React.Component {
     }
 
     return (
-      <ReactDateTime {...this.props.input} inputProps={inputProps} {...this.props.input.conf} />
+      <ReactDateTime {...this.props.input} inputProps={inputProps} {...this.props.field.conf} />
     );
   }
 }
