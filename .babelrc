@@ -12,16 +12,15 @@
           "node": "current"
         },
         "useBuiltIns": "entry",
-        "modules": false,
+        "modules": 'umd',
         "loose": true,
         "shippedProposals": true
       }
     ],
-    "@babel/preset-stage-2"
+    "@babel/preset-stage-0"
   ],
   "plugins": [
     "@babel/plugin-proposal-decorators",
-    "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-proposal-export-default-from"
   ],
   "env": {
