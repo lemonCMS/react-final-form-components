@@ -73,7 +73,13 @@ class Example extends React.Component {
                 name={"sirname"}
                 type={"text"}
                 {...size} />
-              <Input label="Email" name={"email"} type={"email"} {...size} />
+              <Input label="Email" name={"email"} type={"email"} {...size} buttonAfter={() => (
+                <Dropdown title="Choose" name="choose-3"bu>
+                  <option value="" selected>Choose</option>
+                  <option value="0">Something</option>
+                  <option value="1">Something else</option>
+                </Dropdown>
+              )}/>
               <DateTime label="birthday" name={"birthday"} {...size} />
               <Select label="Choose" name="choose-1" {...size}>
                 <option value="0">Something</option>

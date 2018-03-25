@@ -138,6 +138,12 @@ class Wrap extends React.Component {
     if (props.field.placeholder) {
       add.placeholder = props.field.placeholder;
     }
+    if (props.field.cols) {
+      add.cols = props.field.cols;
+    }
+    if (props.field.rows) {
+      add.rows = props.field.rows;
+    }
 
     const component = () => {
       // Render custom component
@@ -203,19 +209,13 @@ class Wrap extends React.Component {
 
     const buttonBefore = () => {
       if (_has(props.field, 'buttonBefore')) {
-        if (props.field.buttonBefore.type === 'button') {
-          return (<InputGroup.Button>{this.props.addField(props.field.buttonBefore, 1, size)}</InputGroup.Button>);
-        }
-        return (<InputGroup.Button>{this.props.addField(props.field.buttonBefore, 1, size)}</InputGroup.Button>);
+        return (<InputGroup.Button>{props.field.buttonBefore()}</InputGroup.Button>);
       }
     };
 
     const buttonAfter = () => {
       if (_has(props.field, 'buttonAfter')) {
-        if (props.field.buttonAfter.type) {
-          return (<InputGroup.Button>{this.props.addField(props.field.buttonAfter, 1, size)}</InputGroup.Button>);
-        }
-        return this.props.addField(props.field.buttonAfter, 1, size);
+        return (<InputGroup.Button>{props.field.buttonAfter()}</InputGroup.Button>);
       }
     };
 
@@ -251,7 +251,7 @@ class Wrap extends React.Component {
       return component();
     };
 
-    if (props.type === 'dropDown' && !_has(props.field, 'label')) {
+    if (props.type === 'dropdown' && !_has(props.field, 'label')) {
       return getField();
     }
 
