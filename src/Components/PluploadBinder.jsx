@@ -67,7 +67,6 @@ class PluploadBinder extends React.Component {
   }
 
   editRender(files) {
-    console.log(this.props);
     if (files.length > 0) {
       return (
         <Table striped bordered condensed hover>
