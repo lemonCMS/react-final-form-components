@@ -1,6 +1,6 @@
 {
   "name": "react-final-form-components",
-  "version": "1.0.0-beta.11",
+  "version": "1.0.0-beta.12",
   "description": "React components for react-final-form",
   "main": "index.js",
   "repository": "https://github.com/lemoncms/react-final-form-components",
@@ -64,6 +64,7 @@
     "react-datetime": "^2.14.0",
     "react-final-form": "^3.1.5",
     "react-final-form-arrays": "^1.0.4",
+    "react-plupload": "^0.0.21",
     "resolve-url-loader": "^2.3.0",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",

@@ -77,7 +77,6 @@ class RadioBinder extends React.Component {
       if (this.props.field && this.props.field.disabled && _isFunction(this.props.field.disabled)) {
         disabled = this.context.checkCondition(this.props.field.disabled(), _get(this.props.field, 'parent'));
       }
-      console.log('multiple', multiple);
       const name = (multiple ? `${this.props.input.name}[${key}]` : this.props.input.name);
       const checked = (multiple && clone.indexOf(option.props.value) !== -1) || (!multiple && (this.props.input.value === true || parseInt(this.props.input.value, 10) === 1));
       return (

@@ -14,6 +14,7 @@ import Select from '../src/Bs/Select';
 import Checkbox from '../src/Bs/Checkbox';
 import Complex from '../src/Bs/ComplexRow';
 import Dropdown from '../src/Bs/Dropdown';
+import Plupload from '../src/Bs/Plupload';
 
 require('./utils/moment');
 
@@ -65,9 +66,14 @@ class Example extends React.Component {
             validate={() => {
             }}
             onSubmit={onSubmit}
-            initialValues={{'choose-3': '1'}}
+            initialValues={{
+              'choose-3': '1', 'plupload': [
+                {file_original_name: 'test'}
+              ]
+            }}
           >
             <Well>
+              <Plupload name={'plupload'} />
               <Input label="Firstname" name={"firstname"} type={"text"} {...size} />
               <Input
                 label="Sirname"
@@ -75,7 +81,7 @@ class Example extends React.Component {
                 type={"text"}
                 {...size} />
               <Input label="Email" name={"email"} type={"email"} {...size} buttonAfter={() => (
-                <Dropdown title="Choose" name="choose-3"bu>
+                <Dropdown title="Choose" name="choose-3" bu>
                   <option value="" selected>Choose</option>
                   <option value="0">Something</option>
                   <option value="1">Something else</option>
