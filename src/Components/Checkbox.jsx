@@ -60,10 +60,13 @@ class RadioBinder extends React.Component {
 
   radioButtonList(list) {
     const staticField = this.context.isStatic || _get(this.props.field, 'static', false);
+    const multiple = _isArray(this.props.field.children);
+
     let clone = [];
     if (_isArray(this.props.input.value)) {
       clone = _map(this.props.input.value, item => (String(item)));
     }
+
 
     return _map(list, (option, key) => {
       if (staticField === true) {
@@ -74,22 +77,29 @@ class RadioBinder extends React.Component {
       if (this.props.field && this.props.field.disabled && _isFunction(this.props.field.disabled)) {
         disabled = this.context.checkCondition(this.props.field.disabled(), _get(this.props.field, 'parent'));
       }
+      console.log('multiple', multiple);
+      const name = (multiple ? `${this.props.input.name}[${key}]` : this.props.input.name);
+      const checked = (multiple && clone.indexOf(option.props.value) !== -1) || (!multiple && (this.props.input.value === true || parseInt(this.props.input.value, 10) === 1));
       return (
         <Checkbox
           key={key}
           disabled={disabled}
-          name={`${this.props.input.name}[${key}]`}
+          name={name}
           value={option.props.value}
-          checked={clone.indexOf(option.props.value) !== -1}
+          checked={checked}
           onChange={(event) => {
-            const newValue = ((this.props.input.value instanceof Array) ? this.props.input.value : [this.props.input.value]).filter(Boolean);
-            if (event.target.checked) {
-              newValue.push(option.props.value);
+            if (multiple) {
+              const newValue = ((this.props.input.value instanceof Array) ? this.props.input.value : [this.props.input.value]).filter(Boolean);
+              console.log(newValue);
+              if (event.target.checked) {
+                newValue.push(option.props.value);
+              } else {
+                newValue.splice(newValue.indexOf(option.props.value), 1);
+              }
+              return this.props.input.onChange(newValue);
             } else {
-              newValue.splice(newValue.indexOf(option.props.value), 1);
+              return this.props.input.onChange(event.target.checked ? option.props.value : false);
             }
-
-            return this.props.input.onChange(newValue);
           }}
         >
           {option.props.children}

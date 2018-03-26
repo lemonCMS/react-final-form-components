@@ -65,6 +65,7 @@ class Example extends React.Component {
             validate={() => {
             }}
             onSubmit={onSubmit}
+            initialValues={{'choose-3': '1'}}
           >
             <Well>
               <Input label="Firstname" name={"firstname"} type={"text"} {...size} />
@@ -88,6 +89,9 @@ class Example extends React.Component {
               <Checkbox label="Choose" name="choose-2" {...size}>
                 <option value="0">Something</option>
                 <option value="1">Something else</option>
+              </Checkbox>
+              <Checkbox label="Choose single value" name="choose-3" {...size}>
+                <option value={true}>Something else</option>
               </Checkbox>
               <Dropdown title="Choose" label="Choose" name="choose-3" {...size}>
                 <option value="" selected>Choose</option>
