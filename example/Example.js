@@ -80,8 +80,8 @@ class Example extends React.Component {
                   <option value="0">Something</option>
                   <option value="1">Something else</option>
                 </Dropdown>
-              )}/>
-              <DateTime label="birthday" name={"birthday"} {...size} conf={{timeFormat: false}}/>
+              )} />
+              <DateTime label="birthday" name={"birthday"} {...size} conf={{timeFormat: false}} />
               <Select label="Choose" name="choose-1" {...size}>
                 <option value="0">Something</option>
                 <option value="1">Something else</option>

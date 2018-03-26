@@ -65,8 +65,8 @@ class PluploadBinder extends React.Component {
     });
   }
 
-  editRender(files) {
-    if (files.length > 0) {
+  editRender() {
+    if (Array.isArray(this.props.input.value) && this.props.input.value.length > 0) {
       return (
         <Table striped bordered condensed hover>
           <thead>
@@ -93,8 +93,8 @@ class PluploadBinder extends React.Component {
     }
   }
 
-  staticRender(files) {
-    if (files.length > 0) {
+  staticRender() {
+    if (Array.isArray(this.props.input.value) && this.props.input.value.length > 0) {
       return (
         <Table striped bordered condensed hover>
           <thead>
@@ -103,7 +103,7 @@ class PluploadBinder extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {_map(files, (file, key) => (!file.deleted &&
+            {_map(this.props.input.value, (file, key) => (!file.deleted &&
               <tr key={key}>
                 <td>{file.file_original_name} {file.deleted}</td>
               </tr>
