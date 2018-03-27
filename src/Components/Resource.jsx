@@ -98,7 +98,7 @@ class Resourcebinder extends React.Component {
 
     const button = () => {
       if (!this.props.field.static && !this.context.isStatic) {
-        return (<button onClick={this.openResource}
+        return (<button type='button' onClick={this.openResource}
           disabled={disabled}>{_get(this.props, 'field.buttonResource', 'open')}</button>);
       }
     };
