@@ -5,17 +5,29 @@
       "@babel/preset-env",
       {
         "targets": {
-          "browsers": ["last 2 versions", "IE >= 8"],
+          "browsers": [
+            "last 2 versions",
+            "IE >= 8"
+          ],
           "node": "current"
         },
         "useBuiltIns": "entry",
-        "modules": "umd",
-        "loose": true
+        "modules": false,
+        "loose": true,
+        "shippedProposals": true
       }
     ],
     "@babel/preset-stage-0"
   ],
   "plugins": [
-    "@babel/plugin-transform-react-jsx"
-  ]
+    "@babel/plugin-proposal-decorators",
+    "@babel/plugin-proposal-object-rest-spread"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel"
+      ]
+    }
+  }
 }
