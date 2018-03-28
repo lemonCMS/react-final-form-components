@@ -12,7 +12,7 @@
           "node": "current"
         },
         "useBuiltIns": "entry",
-        "modules": false,
+        "modules": "umd",
         "loose": true,
         "shippedProposals": true
       }

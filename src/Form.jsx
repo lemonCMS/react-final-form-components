@@ -100,8 +100,8 @@ class FormObj extends React.Component {
     return (<FinalForm
       onSubmit={this.props.onSubmit || onSubmit}
       subscription={this.props.subscription}
-      validate={this.props.validate || (() => {
-      })}
+      validate={this.props.validate || (() => ({
+      }))}
       initialValues={this.props.initialValues || {}}
       mutators={{
         ...arrayMutators

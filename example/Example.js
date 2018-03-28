@@ -43,7 +43,15 @@ class Example extends React.Component {
 
     const onSubmit = async values => {
       await sleep(1000);
-      window.alert(JSON.stringify(values, 0, 2));
+
+      return new Promise((resolve) => {
+        if (values.firstname !== 'peter') {
+          resolve({firstname: 'Nope! must contain peter'});
+        } else {
+          window.alert(JSON.stringify(values, 0, 2));
+          resolve();
+        }
+      });
     };
 
     const size = {
@@ -63,7 +71,12 @@ class Example extends React.Component {
             debug
             className="form-horizontal"
             subscription={{values: true}}
-            validate={() => {
+            validate={(data) => {
+              const errors = {};
+              if (data.firstname !== 'firstname' && data.firstname !== 'peter') {
+                errors.firstname = 'Firstname must contain \"firstname\"';
+              }
+              return errors;
             }}
             onSubmit={onSubmit}
             initialValues={{

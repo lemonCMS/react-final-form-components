@@ -6,7 +6,7 @@ class Button extends Component {
   render() {
     const {children, ...rest} = this.props;
     return (
-      <BSButton {...rest} disabled={this.context.status.submitting || !this.context.status.valid  || this.context.status.pristine}>
+      <BSButton {...rest} disabled={(this.context.status.submitting === true || this.context.status.valid === false  || this.context.status.pristine === true ) && this.context.status.dirtySinceLastSubmit === false}>
         {children}
         {this.props.type === 'submit' && this.context.status.submitting && ' '}
         {this.props.type === 'submit' && this.context.status.submitting && <i className="fa fa-circle-o-notch fa-spin" />}
