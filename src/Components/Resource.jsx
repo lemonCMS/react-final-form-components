@@ -19,10 +19,38 @@ class Resourcebinder extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.options = this.options.bind(this);
     this.callBack = this.callBack.bind(this);
+    this.getList = this.getList.bind(this);
     this.state = {
       showResource: false,
-      list: null
+      list: []
     };
+  }
+
+  componentWillMount() {
+    this.getList(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.getList(nextProps);
+  }
+
+  getList(props) {
+    const {field} = props;
+    let list = [];
+    if (this.state.list.length === 0) {
+      if (_has(field, 'list')) {
+        list = field.list;
+      } else if (props.field.children) {
+
+        list = _map(_isArray(props.field.children) ? props.field.children : [props.field.children], (option) => {
+          return ({value: option.props.value, desc: option.props.children});
+        });
+      }
+    } else {
+      list = this.state.list;
+    }
+
+    this.setState({list: list});
   }
 
   onChange(e, value) {
@@ -40,22 +68,7 @@ class Resourcebinder extends React.Component {
   }
 
   options() {
-    const {field} = this.props;
-    let list = [];
-    if (this.state.list === null) {
-      if (_has(field, 'list')) {
-        list = field.list;
-      } else if (this.props.field.children) {
-
-        list = _map(_isArray(this.props.field.children) ? this.props.field.children : [this.props.field.children], (option) => {
-          return ({value: option.props.value, desc: option.props.children});
-        });
-      }
-    } else {
-      list = this.state.list;
-    }
-
-    const options = _map(list, (option, key) => {
+    const options = _map(this.state.list, (option, key) => {
       if (_indexOf(this.props.input.value, option.value) > -1) {
         return (
           <p className="form-control-static" key={key}>

@@ -15,6 +15,8 @@ import Checkbox from '../src/Bs/Checkbox';
 import Complex from '../src/Bs/ComplexRow';
 import Dropdown from '../src/Bs/Dropdown';
 import Plupload from '../src/Bs/Plupload';
+import Resource from '../src/Bs/Resource';
+import TestResource from './TestResource'
 
 require('./utils/moment');
 
@@ -80,13 +82,14 @@ class Example extends React.Component {
             }}
             onSubmit={onSubmit}
             initialValues={{
-              'choose-3': '1', 'plupload': [
+              'choose-3': '1',
+              'plupload': [
                 {file_original_name: 'test'}
               ]
             }}
           >
             <Well>
-              <Plupload name={'plupload'} />
+              <Plupload name={'plupload'}/>
               <Input label="Firstname" name={"firstname"} type={"text"} {...size} />
               <Input
                 label="Sirname"
@@ -99,8 +102,8 @@ class Example extends React.Component {
                   <option value="0">Something</option>
                   <option value="1">Something else</option>
                 </Dropdown>
-              )} />
-              <DateTime label="birthday" name={"birthday"} {...size} conf={{timeFormat: false}} />
+              )}/>
+              <DateTime label="birthday" name={"birthday"} {...size} conf={{timeFormat: false}}/>
               <Select label="Choose" name="choose-1" {...size}>
                 <option value="0">Something</option>
                 <option value="1">Something else</option>
@@ -142,6 +145,15 @@ class Example extends React.Component {
                 )}>
                 </Complex>
               </Show>
+
+              <Resource
+                name={'resource'}
+                resource={props => (<TestResource {...props} />)
+                }>
+                <option value={1}>Selected option 1</option>
+              </Resource>
+
+
             </Well>
             <Message type="success">Message after success</Message>
             <Message type="error">Oopsie!</Message>
