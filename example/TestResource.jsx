@@ -8,9 +8,11 @@ export default class Resource extends Component {
   static propTypes = {
     show: PropTypes.bool,
     closeResource: PropTypes.func,
-    clonedValues: PropTypes.array,
+    clonedValues: PropTypes.oneOfType([PropTypes.array, PropTypes.number]),
     clonedList: PropTypes.array,
     callBack: PropTypes.func,
+    multiple: PropTypes.bool,
+    name: PropTypes.string
   };
 
   constructor() {
@@ -40,27 +42,39 @@ export default class Resource extends Component {
   }
 
   onChange(e, item) {
-    const values = this.state.values;
-    const list = this.state.list;
-    const index = _.findIndex(list, {value: item.value});
-
-    if (e.target.checked === true) {
-      if (index === -1) {
-        list.push(item);
+    if (this.props.multiple === false) {
+      if (e.target.checked === true) {
+        this.setState({
+          values: item.value,
+          list: [item]
+        });
+      } else {
+        this.setState({
+          values: null,
+          list: []
+        });
       }
-      values.push(item.value);
     } else {
-      if (index > -1) {
-        list.splice(index, 1);
+      const values = this.state.values;
+      const list = this.state.list;
+      const index = _.findIndex(list, {value: item.value});
+      if (e.target.checked === true) {
+        if (index === -1) {
+          list.push(item);
+        }
+        values.push(item.value);
+      } else {
+        if (index > -1) {
+          list.splice(index, 1);
+        }
+        values.splice(_.indexOf(values, item.value), 1);
       }
-      values.splice(_.indexOf(values, item.value), 1);
-    }
 
-    console.log(list);
-    this.setState({
-      values: _.uniq(values),
-      list: list
-    });
+      this.setState({
+        values: _.uniq(values),
+        list: list
+      });
+    }
   }
 
   list(items) {
@@ -70,9 +84,10 @@ export default class Resource extends Component {
           <label htmlFor={`check-${key}`}>
             <input
               id={`check-${key}`}
-              type="checkbox"
+              type={this.props.multiple ? 'checkbox' : 'radio'}
+              name={this.props.multiple ? `check-${key}`: `check-${this.props.name}`}
               value={item.value}
-              defaultChecked={_.indexOf(this.state.values, item.value) > -1}
+              defaultChecked={_.indexOf(this.props.multiple ? this.state.values : [this.state.values], item.value) > -1}
               onChange={(e) => { this.onChange(e, item); }}
             />
             {' ' + item.desc}

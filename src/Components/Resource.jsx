@@ -16,7 +16,6 @@ class Resourcebinder extends React.Component {
     super();
     this.openResource = this.openResource.bind(this);
     this.closeResource = this.closeResource.bind(this);
-    this.onChange = this.onChange.bind(this);
     this.options = this.options.bind(this);
     this.callBack = this.callBack.bind(this);
     this.getList = this.getList.bind(this);
@@ -53,32 +52,33 @@ class Resourcebinder extends React.Component {
     this.setState({list: list});
   }
 
-  onChange(e, value) {
-    let values = this.props.input.value;
-    if (typeof values !== 'object') {
-      values = [values];
-    }
-    if (e.target.checked === true) {
-      values.push(value);
-    } else {
-      values.splice(_indexOf(values, value), 1);
-    }
-
-    this.props.input.onChange(_uniq(values));
-  }
-
   options() {
-    const options = _map(this.state.list, (option, key) => {
-      if (_indexOf(this.props.input.value, option.value) > -1) {
-        return (
-          <p className="form-control-static" key={key}>
-            {_indexOf(this.props.input.value, option.value) > -1 ? <i className="fa fa-check-square-o" /> : <i className="fa fa-square-o" />}
-            {' '}
-            {option.desc}
-          </p>
-        );
-      }
-    });
+    let options = [];
+    if (_get(this.props.field, 'multiple', true) === true) {
+      options = _map(this.state.list, (option, key) => {
+        if (_indexOf(this.props.input.value, option.value) > -1) {
+          return (
+            <p className="form-control-static" key={key}>
+              {_indexOf(this.props.input.value, option.value) > -1 ? <i className="fa fa-check-square-o" /> : <i className="fa fa-square-o" />}
+              {' '}
+              {option.desc}
+            </p>
+          );
+        }
+      });
+    } else {
+      options = _map(this.state.list, (option, key) => {
+        if (String(this.props.input.value) === String(option.value)) {
+          return (
+            <p className="form-control-static" key={key}>
+              <i className="fa fa-check-square-o" />
+              {' '}
+              {option.desc}
+            </p>
+          );
+        }
+      });
+    }
 
     return (
       <div className="checkbox">
@@ -91,7 +91,13 @@ class Resourcebinder extends React.Component {
     this.setState({
       list: list
     }, () => {
-      this.props.input.onChange(_uniq(values));
+
+      if (_get(this.props.field, 'multiple', true) === true) {
+        this.props.input.onChange(_uniq(values));
+      } else {
+        this.props.input.onChange(values);
+      }
+
     });
   }
 
@@ -117,11 +123,14 @@ class Resourcebinder extends React.Component {
     };
 
     const clonedValues = () => {
-      if (_isEmpty(this.props.input.value)) {
-        return [];
+      if (_get(this.props.field, 'multiple', true) === true) {
+        if (_isEmpty(this.props.input.value)) {
+          return [];
+        }
+        return _clone(this.props.input.value);
+      } else {
+        return this.props.input.value;
       }
-
-      return _clone(this.props.input.value);
     };
 
     const resourceProps = {
@@ -129,7 +138,9 @@ class Resourcebinder extends React.Component {
       clonedList: _clone(this.state.list) || _clone(this.props.field.list) || [],
       callBack: this.callBack,
       show: this.state.showResource,
-      closeResource: this.closeResource
+      closeResource: this.closeResource,
+      multiple: _get(this.props.field, 'multiple', true),
+      name: _get(this.props.field, 'name')
     };
 
     return (
@@ -145,6 +156,7 @@ class Resourcebinder extends React.Component {
 Resourcebinder.propTypes = {
   field: PropTypes.object,
   input: PropTypes.object,
+  mango: PropTypes.object,
 };
 
 Resourcebinder.contextTypes = {

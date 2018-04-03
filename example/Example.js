@@ -83,6 +83,8 @@ class Example extends React.Component {
             onSubmit={onSubmit}
             initialValues={{
               'choose-3': '1',
+              'resource': [1],
+              'resource2': 2,
               'plupload': [
                 {file_original_name: 'test'}
               ]
@@ -152,6 +154,15 @@ class Example extends React.Component {
                 }>
                 <option value={1}>Selected option 1</option>
               </Resource>
+
+              <Resource
+                name={'resource2'}
+                multiple={false}
+                resource={props => (<TestResource {...props} />)
+                }>
+                <option value={2}>Selected option 2</option>
+              </Resource>
+
               <Complex name={'something'} label={'x'} left={{xs: 9}} right={{xs: 3}} mandatory multiple={false} render={(name) => (
                 <Row>
                   <Col xs={6}>
