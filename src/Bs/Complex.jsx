@@ -16,10 +16,18 @@ class Complex extends React.Component {
   constructor() {
     super();
     this.renderComplex = this.renderComplex.bind(this);
+    this.push = null;
+    this.length = 0;
     this.renderChildren = this.renderChildren.bind(this);
     this.state = {
       collapsed: null
     };
+  }
+
+  componentDidMount() {
+    if (this.props.mandatory === true && (this.length === undefined || this.length === 0)) {
+      this.push({});
+    }
   }
 
   renderChildren(name, count, remove, move, complexIndex, staticField, disabled) {
@@ -55,20 +63,22 @@ class Complex extends React.Component {
           );
         }
 
-        returnButtons.push(
-          <Button
-            key={1}
-            onClick={() => remove(complexIndex)}
-            bsStyle={_get(this.props.removeBtn, 'bsStyle', 'danger')}
-            bsSize={_get(this.props.removeBtn, 'bsSize', undefined)}
-            className={_get(this.props.removeBtn, 'className', '')}
-            title={_get(this.props.removeBtn, 'title', '')}
-            disabled={disabled}
-            type="button"
-          >
-            <i className="fa fa-trash" />
-          </Button>
-        );
+        if ((this.props.mandatory && count > 1) || (!this.props.mandatory && count > 0)) {
+          returnButtons.push(
+            <Button
+              key={1}
+              onClick={() => remove(complexIndex)}
+              bsStyle={_get(this.props.removeBtn, 'bsStyle', 'danger')}
+              bsSize={_get(this.props.removeBtn, 'bsSize', undefined)}
+              className={_get(this.props.removeBtn, 'className', '')}
+              title={_get(this.props.removeBtn, 'title', '')}
+              disabled={disabled}
+              type="button"
+            >
+              <i className="fa fa-trash" />
+            </Button>
+          );
+        }
       }
       return returnButtons;
     };
@@ -119,6 +129,9 @@ class Complex extends React.Component {
   renderComplex(props) {
     const {fields, meta: {touched, error}} = props;
     const staticField = props.static;
+
+    this.push = props.fields.push;
+    this.length = props.fields.length;
 
     const thisSize = () => {
       if (this.props.size !== 'medium') {
@@ -206,7 +219,7 @@ class Complex extends React.Component {
           {fields.map((field, key) => {
             return (
               <div key={key} className="rfg-cmplx-fields">
-                {this.renderChildren(field, fields.length, fields.remove, fields.move, key, staticField, disabled)}
+                {this.renderChildren(field, fields.length, fields.remove, fields.move, key, staticField, disabled, this.props.mandatory)}
               </div>
             );
           })}
@@ -232,7 +245,7 @@ class Complex extends React.Component {
         component={this.renderComplex}
         name={this.props.name}
         collapsed={this.state.collapsed}
-        subscription={this.props.subscription || {values: true}}
+        subscription={this.props.subscription || {values: true, valid: true, invalid: true, length: true}}
       />
     );
   }
@@ -252,10 +265,13 @@ Complex.propTypes = {
   fieldSize: PropTypes.object,
   label: PropTypes.string,
   name: PropTypes.string,
-  row: PropTypes.bool
+  row: PropTypes.bool,
+  mandatory: PropTypes.bool
 };
 Complex.defaultProps = {
-  row: false
+  row: false,
+  mandatory: false,
+  multiple: true
 };
 
 Complex.contextTypes = {

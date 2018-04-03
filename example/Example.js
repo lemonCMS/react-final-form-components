@@ -133,7 +133,7 @@ class Example extends React.Component {
                 }}
               >
                 <h4>How many kids?</h4>
-                <Complex name={'kids'} left={{xs: 9}} right={{xs: 3}} render={(name) => (
+                <Complex name={'kids'} left={{xs: 9}} right={{xs: 3}} mandatory render={(name) => (
                   <Row>
                     <Col xs={6}>
                       <Input placeholder="Name" name={`${name}.name`} type={"text"} {...sizeComplex} />
@@ -152,8 +152,17 @@ class Example extends React.Component {
                 }>
                 <option value={1}>Selected option 1</option>
               </Resource>
-
-
+              <Complex name={'something'} label={'x'} left={{xs: 9}} right={{xs: 3}} mandatory multiple={false} render={(name) => (
+                <Row>
+                  <Col xs={6}>
+                    <Input placeholder="Name" name={`${name}.name`} type={"text"} {...sizeComplex} />
+                  </Col>
+                  <Col xs={6}>
+                    <Input placeholder="Age" name={`${name}.age`} type={"number"} {...sizeComplex} />
+                  </Col>
+                </Row>
+              )}>
+              </Complex>
             </Well>
             <Message type="success">Message after success</Message>
             <Message type="error">Oopsie!</Message>

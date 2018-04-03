@@ -129,6 +129,6 @@ FormObj.propTypes = {
 };
 FormObj.defaultProps = {
   debug: false
-}
+};
 
 export default FormObj;
