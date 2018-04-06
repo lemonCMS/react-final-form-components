@@ -311,7 +311,7 @@ Wrap.propTypes = {
   'name': PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   component: PropTypes.func,
-  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.bool])
 };
 Wrap.contextTypes = {
   debug: PropTypes.bool.isRequired,
