@@ -82,6 +82,7 @@ class Example extends React.Component {
             }}
             onSubmit={onSubmit}
             initialValues={{
+              'resource': [1],
               'choose-3': '1',
               'resource': [1],
               'resource2': 2,

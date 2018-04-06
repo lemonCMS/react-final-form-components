@@ -10,7 +10,10 @@
             "IE >= 8"
           ],
           "node": "current"
-        }
+        },
+        "useBuiltIns": "entry",
+        "loose": true,
+        "shippedProposals": true
       }
     ],
     "@babel/preset-stage-0"
