@@ -98,9 +98,14 @@ ContextWrapper.defaultProps = {
 
 class FormObj extends React.Component {
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
     if (this.props.shouldComponentUpdate) {
-      return this.props.shouldComponentUpdate();
+      switch (typeof this.props.shouldComponentUpdate) {
+        case 'function':
+          return this.props.shouldComponentUpdate();
+        default:
+          return this.props.shouldComponentUpdate !== nextProps.shouldComponentUpdate;
+      }
     }
     return false;
   }
@@ -130,7 +135,7 @@ FormObj.propTypes = {
   onSubmit: PropTypes.func,
   validate: PropTypes.func,
   className: PropTypes.string,
-  shouldComponentUpdate: PropTypes.func,
+  shouldComponentUpdate: PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool, PropTypes.string]),
   listen: PropTypes.func,
   debug: PropTypes.bool
 };

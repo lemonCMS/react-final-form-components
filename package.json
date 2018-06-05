@@ -1,6 +1,6 @@
 {
   "name": "react-final-form-components",
-  "version": "1.0.0-beta.33",
+  "version": "1.0.0-beta.34",
   "description": "React components for react-final-form",
   "main": "dist/index.js",
   "repository": "https://github.com/lemoncms/react-final-form-components",
