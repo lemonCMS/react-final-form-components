@@ -113,6 +113,7 @@ class FormObj extends React.Component {
 
   render() {
     return (<FinalForm
+      keepDirtyOnReinitialize={this.props.keepDirtyOnReinitialize}
       onSubmit={this.props.onSubmit || onSubmit}
       subscription={this.props.subscription}
       validate={this.props.validate || (() => ({}))}
@@ -130,6 +131,7 @@ class FormObj extends React.Component {
 }
 
 FormObj.propTypes = {
+  keepDirtyOnReinitialize: PropTypes.bool,
   initialValues: PropTypes.object,
   subscription: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
@@ -141,7 +143,8 @@ FormObj.propTypes = {
   debug: PropTypes.bool
 };
 FormObj.defaultProps = {
-  debug: false
+  debug: false,
+  keepDirtyOnReinitialize: false
 };
 
 export default FormObj;
