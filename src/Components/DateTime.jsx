@@ -2,25 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _isFunction from 'lodash/isFunction';
 import _omitBy from 'lodash/omitBy';
+import _pickBy from 'lodash/pickBy';
 import ReactDateTime from 'react-datetime';
 import moment from 'moment';
 
 class ContextBinder extends React.Component {
 
   state = {
-    value: ''
+    value: null
   };
 
   componentWillMount() {
     if (this.props.input.value && this.props.input.value !== '' && this.props.field.conf && this.props.field.conf.unix) {
       this.setState({value: moment.unix(this.props.input.value)}, () => {
-        this.props.onChange(this.state.value);
+        this.props.input.onChange(this.state.value);
       });
     } else {
       this.setState({
         value: moment(this.props.input.value)
       }, () => {
-        this.props.onChange(this.state.value);
+        this.props.input.onChange(this.state.value);
       });
     }
   }
@@ -28,7 +29,9 @@ class ContextBinder extends React.Component {
   render() {
     if (this.context.isStatic || this.props.field.static) {
       return (
-        <div className={'rte-readonly'} dangerouslySetInnerHTML={{__html: this.props.input.value}} />
+        <div
+          className={'rte-readonly'}
+          dangerouslySetInnerHTML={{__html: this.state.value ? this.state.value.format() : ''}} />
       );
     }
 

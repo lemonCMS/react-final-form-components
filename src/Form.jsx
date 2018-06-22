@@ -96,7 +96,6 @@ ContextWrapper.defaultProps = {
 
 class FormObj extends React.Component {
   render() {
-
     return (<FinalForm
       onSubmit={this.props.onSubmit || onSubmit}
       subscription={this.props.subscription}
