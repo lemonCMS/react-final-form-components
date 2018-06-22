@@ -70,11 +70,13 @@ class ContextWrapper extends React.Component {
     return (
       <React.Fragment>
         {this.props.children}
-        <FormSpy subscription={{values: true}} onChange={(props) => {
-          if (this.props.listen && _isFunction(this.props.listen)) {
+        {
+          this.props.listen
+          && _isFunction(this.props.listen)
+          && <FormSpy subscription={{values: true}} onChange={(props) => {
             this.props.listen(props.values);
-          }
-        }}/>
+          }}/>
+        }
       </React.Fragment>
     );
   }
@@ -95,19 +97,30 @@ ContextWrapper.defaultProps = {
 };
 
 class FormObj extends React.Component {
+  shouldComponentUpdate(nextProps) {
+
+    switch (typeof this.props.shouldComponentUpdate) {
+      case 'undefined':
+        return false;
+      case 'function':
+        return this.props.shouldComponentUpdate();
+      default:
+        return this.props.shouldComponentUpdate !== nextProps.shouldComponentUpdate;
+    }
+
+    return false;
+  }
+
   render() {
     return (<FinalForm
       onSubmit={this.props.onSubmit || onSubmit}
       subscription={this.props.subscription}
-      validate={this.props.validate || (() => ({
-      }))}
+      validate={this.props.validate || (() => ({}))}
       initialValues={this.props.initialValues || {}}
-      mutators={{
-        ...arrayMutators
-      }}
+      mutators={{...arrayMutators}}
       render={({handleSubmit, ...rest}) => {
         return (
-          <ContextWrapper {..._omit(this.props, ['onSubmit', 'validate', 'initialValues', 'subscription'])} {...rest} >
+          <ContextWrapper {..._omit(this.props, ['onSubmit', 'validate', 'initialValues', 'subscription', 'shouldComponentUpdate'])} {...rest} >
             <form onSubmit={handleSubmit} className={this.props.className}>
               {this.props.children}
             </form>
@@ -123,6 +136,7 @@ FormObj.propTypes = {
   onSubmit: PropTypes.func,
   validate: PropTypes.func,
   className: PropTypes.string,
+  shouldComponentUpdate: PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool, PropTypes.string]),
   listen: PropTypes.func,
   debug: PropTypes.bool
 };

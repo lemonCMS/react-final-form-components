@@ -85,7 +85,6 @@ class Example extends React.Component {
               'birthday': 1463436000,
               'resource': [1],
               'choose-3': '1',
-              'resource': [1],
               'resource2': 2,
               'plupload': [
                 {file_original_name: 'test'}
