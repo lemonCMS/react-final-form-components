@@ -99,7 +99,6 @@ ContextWrapper.defaultProps = {
 class FormObj extends React.Component {
 
   shouldComponentUpdate(nextProps) {
-
     switch (typeof this.props.shouldComponentUpdate) {
       case 'undefined':
         return false;
@@ -108,8 +107,6 @@ class FormObj extends React.Component {
       default:
         return this.props.shouldComponentUpdate !== nextProps.shouldComponentUpdate;
     }
-
-    return false;
   }
 
   render() {
