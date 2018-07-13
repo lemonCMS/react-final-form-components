@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _isFunction from 'lodash/isFunction';
 import _omitBy from 'lodash/omitBy';
+import _pickBy from 'lodash/pickBy';
 import ReactDateTime from 'react-datetime';
 import moment from 'moment';
 
 class ContextBinder extends React.Component {
 
   state = {
-    value: ''
+    value: null
   };
 
   componentWillMount() {
@@ -28,7 +29,9 @@ class ContextBinder extends React.Component {
   render() {
     if (this.context.isStatic || this.props.field.static) {
       return (
-        <div className={'rte-readonly'} dangerouslySetInnerHTML={{__html: this.props.input.value}} />
+        <div
+          className={'rte-readonly'}
+          dangerouslySetInnerHTML={{__html: this.state.value ? this.state.value.format() : ''}} />
       );
     }
 
