@@ -16,10 +16,10 @@
         "shippedProposals": true
       }
     ],
-    "@babel/preset-stage-0"
+    ["@babel/preset-stage-0", {"decoratorsLegacy": true}]
   ],
   "plugins": [
-    "@babel/plugin-proposal-decorators",
+    ["@babel/plugin-proposal-decorators", {"legacy": true}],
     "@babel/plugin-proposal-object-rest-spread"
   ],
   "env": {
