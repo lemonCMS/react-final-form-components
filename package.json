@@ -72,5 +72,8 @@
     "react-final-form-arrays": "^1.0.6",
     "react-plupload": "^0.0.21",
     "uniqid": "^5.0.3"
+  },
+  "engines": {
+    "node": ">=5.6.0"
   }
 }
