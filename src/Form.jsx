@@ -2,8 +2,8 @@ import arrayMutators from 'final-form-arrays';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Form as FinalForm, FormSpy} from 'react-final-form';
-import _omit from 'lodash/omit'
-import _isFunction from 'lodash/isFunction'
+import _omit from 'lodash/omit';
+import _isFunction from 'lodash/isFunction';
 
 const onSubmit = async (values) => {
   console.warn('Implement onSubmit handler');
@@ -64,7 +64,7 @@ class ContextWrapper extends React.Component {
               );
             }}
           </FormSpy>
-        </div>)
+        </div>);
     }
 
     return (
@@ -73,9 +73,11 @@ class ContextWrapper extends React.Component {
         {
           this.props.listen
           && _isFunction(this.props.listen)
-          && <FormSpy subscription={{values: true}} onChange={(props) => {
-            this.props.listen(props.values);
-          }}/>
+          && <FormSpy
+            subscription={{values: true}}
+            onChange={(props) => {
+              this.props.listen(props.values);
+            }}/>
         }
       </React.Fragment>
     );
@@ -86,8 +88,20 @@ ContextWrapper.propTypes = {
   children: PropTypes.object,
   'static': PropTypes.bool,
   values: PropTypes.object,
-  initialValues: PropTypes.object,
   debug: PropTypes.bool,
+  dirty: PropTypes.bool,
+  dirtySinceLastSubmit: PropTypes.bool,
+  errors: PropTypes.string,
+  error: PropTypes.bool,
+  invalid: PropTypes.bool,
+  pristine: PropTypes.bool,
+  submitError: PropTypes.bool,
+  submitErrors: PropTypes.string,
+  submitFailed: PropTypes.bool,
+  submitSucceeded: PropTypes.bool,
+  submitting: PropTypes.bool,
+  valid: PropTypes.bool,
+  validating: PropTypes.bool,
   listen: PropTypes.func
 };
 
@@ -98,7 +112,6 @@ ContextWrapper.defaultProps = {
 
 class FormObj extends React.Component {
   shouldComponentUpdate(nextProps) {
-
     switch (typeof this.props.shouldComponentUpdate) {
       case 'undefined':
         return false;
@@ -107,11 +120,11 @@ class FormObj extends React.Component {
       default:
         return this.props.shouldComponentUpdate !== nextProps.shouldComponentUpdate;
     }
-
-    return false;
   }
 
   render() {
+    console.log(this.props.keepDirtyOnReinitialize);
+
     return (<FinalForm
       keepDirtyOnReinitialize={this.props.keepDirtyOnReinitialize}
       onSubmit={this.props.onSubmit || onSubmit}
@@ -121,8 +134,10 @@ class FormObj extends React.Component {
       mutators={{...arrayMutators}}
       render={({handleSubmit, ...rest}) => {
         return (
-          <ContextWrapper {..._omit(this.props, ['onSubmit', 'validate', 'initialValues', 'subscription', 'shouldComponentUpdate'])} {...rest} >
-            <form onSubmit={handleSubmit} className={this.props.className}>
+          <ContextWrapper {..._omit(this.props, ['onSubmit', 'validate', 'initialValues', 'subscription', 'shouldComponentUpdate'])} {...rest}>
+            <form
+              onSubmit={handleSubmit}
+              className={this.props.className}>
               {this.props.children}
             </form>
           </ContextWrapper>);
