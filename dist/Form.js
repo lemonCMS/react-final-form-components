@@ -208,7 +208,6 @@ function (_React$Component2) {
   _proto2.render = function render() {
     var _this3 = this;
 
-    console.log(this.props.keepDirtyOnReinitialize);
     return _react.default.createElement(_reactFinalForm.Form, {
       keepDirtyOnReinitialize: this.props.keepDirtyOnReinitialize,
       onSubmit: this.props.onSubmit || onSubmit,

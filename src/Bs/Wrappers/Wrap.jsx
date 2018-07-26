@@ -144,6 +144,9 @@ class Wrap extends React.Component {
     if (props.field.rows) {
       add.rows = props.field.rows;
     }
+    if (props.field.bsClass) {
+      add.bsClass = props.field.bsClass;
+    }
 
     const component = () => {
       // Render custom component
