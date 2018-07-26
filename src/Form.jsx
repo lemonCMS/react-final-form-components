@@ -123,8 +123,6 @@ class FormObj extends React.Component {
   }
 
   render() {
-    console.log(this.props.keepDirtyOnReinitialize);
-
     return (<FinalForm
       keepDirtyOnReinitialize={this.props.keepDirtyOnReinitialize}
       onSubmit={this.props.onSubmit || onSubmit}

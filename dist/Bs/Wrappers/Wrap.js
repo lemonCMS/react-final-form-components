@@ -195,7 +195,7 @@ function (_React$Component) {
       }
     };
 
-    var add = (0, _pick2.default)(custom, ['type', 'placeholder', 'rows', 'cols']);
+    var add = (0, _pick2.default)(custom, ['type', 'placeholder', 'rows', 'cols', 'bsClass']);
 
     if (add.type === 'select') {
       add.componentClass = 'select';
@@ -261,7 +261,7 @@ function (_React$Component) {
 
         case 'select':
           return _react.default.createElement(_FormControl.default, _extends({
-            componentClass: "textarea"
+            componentClass: "select"
           }, input, add), _this3.options(props));
 
         default:

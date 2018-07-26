@@ -127,7 +127,7 @@ class Wrap extends React.Component {
       }
     };
 
-    const add = _pick(custom, ['type', 'placeholder', 'rows', 'cols']);
+    const add = _pick(custom, ['type', 'placeholder', 'rows', 'cols', 'bsClass']);
     if (add.type === 'select') {
       add.componentClass = 'select';
     }
@@ -185,7 +185,7 @@ class Wrap extends React.Component {
           />);
         case 'select':
           return (<FormControl
-            componentClass="textarea"
+            componentClass="select"
             {...input}
             {...add}
           >{this.options(props)}</FormControl>);
