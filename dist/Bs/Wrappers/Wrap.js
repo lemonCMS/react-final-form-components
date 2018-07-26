@@ -217,6 +217,10 @@ function (_React$Component) {
       add.rows = props.field.rows;
     }
 
+    if (props.field.bsClass) {
+      add.bsClass = props.field.bsClass;
+    }
+
     var component = function component() {
       // Render custom component
       if (_this3.props.component) {
