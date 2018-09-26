@@ -171,7 +171,7 @@ function (_React$Component) {
   _proto.initTinyMCE = function initTinyMCE() {
     var currentTime = Date.now();
 
-    if (!tinymce) {
+    if (typeof tinymce === 'undefined') {
       if (currentTime - this.initStartTime > this.props.maxInitWaitTime) {
         this.initTimeout = undefined;
       } else {
