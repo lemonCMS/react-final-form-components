@@ -5,12 +5,12 @@ A set of bootstrap components with added functionality to make it easier to crea
 ### Installment
 Install with npm
 ````bash
-npm install react-final-form-component --save
+npm install react-final-form-components --save
 ````
 
 Or with yarn
 ````bash
-yarn add react-final-form-component
+yarn add react-final-form-components
 ````
 ### Demo
 [https://ultimatejs.babyblox.nl/forms](https://ultimatejs.babyblox.nl/forms)
